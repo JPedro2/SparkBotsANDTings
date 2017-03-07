@@ -1,4 +1,16 @@
-# Botkit Starter Kit for Cisco Spark
+# TSN Casey - A Cisco SparkBOT for to create TSN Cases
+
+
+A user should be able to ask the Bot to raise a case.
+For example “I need to raise a case, what is the throughput of a ISR4321”.
+The Bot will then either
+
+1. Create a case directly with GVE and return the case number to the user 
+2. Ask further questions for clarification.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                            Ignore The text below this line
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 This repo contains everything you need to get started building a bot with Botkit and Botkit Studio!
 
