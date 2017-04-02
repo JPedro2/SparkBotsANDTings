@@ -98,7 +98,7 @@ function usage_tip() {
     console.log('~~~~~~~~~~');
     console.log('Botkit Studio Starter Kit');
     console.log('Execute your bot application like this:');
-    console.log('***REMOVED***<MY ACCESS TOKEN> ***REMOVED***<https://mybotapp/> node bot.js');
+    console.log('***REMOVED***<MWM4NGQ4MGYtMDQwMy00NWE0LThlODQtZGU0NTQwZDFkYTYyZTc3ZWZiYTgtZjhj> ***REMOVED***<https://mybotapp/> node bot.js');
     console.log('Get Cisco Spark token here: https://developer.ciscospark.com/apps.html')
     console.log('Get a Botkit Studio token here: https://studio.botkit.ai/')
     console.log('~~~~~~~~~~');
