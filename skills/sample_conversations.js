@@ -40,7 +40,7 @@ module.exports = function(controller) {
             // mark the conversation as unsuccessful at the end
             convo.addMessage({
                 text: 'Cheese! It is not for everyone.',
-                action: 'stop', // this marks the converation as unsuccessful
+                action: 'stop', // this marks the conversation as unsuccessful
             },'no_thread');
 
             // create a path where neither option was matched
