@@ -40,7 +40,7 @@ var controller = Botkit.sparkbot({
     ciscospark_access_token: process.env.access_token,
     studio_token: process.env.studio_token, // get one from studio.botkit.ai to enable content management, stats, message console and more
     secret: process.env.secret, // this is an RECOMMENDED but optional setting that enables validation of incoming webhooks
-    webhook_name: 'Cisco Spark bot created with Botkit, override me before going to production',
+    webhook_name: 'Casey Webhook',
     studio_command_uri: process.env.studio_command_uri,
 });
 
@@ -98,7 +98,7 @@ function usage_tip() {
     console.log('~~~~~~~~~~');
     console.log('Botkit Studio Starter Kit');
     console.log('Execute your bot application like this:');
-    console.log('***REMOVED***<MWM4NGQ4MGYtMDQwMy00NWE0LThlODQtZGU0NTQwZDFkYTYyZTc3ZWZiYTgtZjhj> ***REMOVED***<https://mybotapp/> node bot.js');
+    console.log('***REMOVED***MDhkYWIzYWMtMDYwOC00MWU0LTg0MjAtODljYTYwMTgzNGViM2M5NTA0YTUtMDVl ***REMOVED***https://3aa74f84.ngrok.io node bot.js');
     console.log('Get Cisco Spark token here: https://developer.ciscospark.com/apps.html')
     console.log('Get a Botkit Studio token here: https://studio.botkit.ai/')
     console.log('~~~~~~~~~~');
