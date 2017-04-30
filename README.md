@@ -1,22 +1,27 @@
 # GVE Casey
 
-CASEY is a virtual assistant helps you create and manage GVE cases, anywhere and on the go using Spark.<br/>
-Our mission is to make the process of creating a case as natural and intuitive as possible.<br/>
+Casey is a virtual assistant that helps you create and manage GVE cases, anywhere and on the go using Spark.<br/>
+Our mission is to make the process of raising a case with GVE as natural and intuitive as possible.<br/>
 
 Using Casey to open and manage GVE cases gives the case creator the capability to do it through an application 
 used in all aspects of the working day - Spark. <br/>
 
-Most importantly this saves time and reduce much of the complexity and manual tasks behind opening a case. <br/>
+The ultimate goal is to save time and reduce much of the complexity and manual tasks behind opening a case. <br/>
 
 Currently, you can interact with Casey on an individual basis or you can add her to a team space,
 where you will have to do a _direct mention `(@Casey)`_ every time you want to interact or answer her clarification
 questions.
-As of this moment, Casey is able to raise a case with GVE for the sender by sending and email to the GVE case handler
+As of this moment, Casey is able to raise a case with GVE by sending an email to the GVE case handler
 team with all the required information.
+To do this all you need to do is tell Casey that you wish to open a case. For example: <br/>
+
+_`Hi Casey, I would like to open a case with GVE`_
+
+Casey will then ask you further clarification questions and send an email out to the GVE case handler team - the requester will be CC'ed in the email.
 
 You can find the overview video of the project below:
 
-[Casey, Your personal GVE case handler](https://studio.botkit.ai/)
+[Casey, Your personal GVE case handler](https://www.youtube.com/watch?v=oHg5SJYRHA0&feature=youtu.be&t=43s)
 
 
 ### Dependencies
