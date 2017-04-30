@@ -1,4 +1,5 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
            ______     ______     ______   __  __     __     ______
           /\  == \   /\  __ \   /\__  _\ /\ \/ /    /\ \   /\__  _\
           \ \  __<   \ \ \/\ \  \/_/\ \/ \ \  _"-.  \ \ \  \/_/\ \/
@@ -6,14 +7,8 @@
             \/_____/   \/_____/     \/_/   \/_/\/_/   \/_/     \/_/
 
 
-This is a sample Cisco Spark bot built with Botkit.
-
-# RUN THE BOT:
-  Follow the instructions here to set up your Cisco Spark bot:
-    -> https://developer.ciscospark.com/bots.html
-  Run your bot from the command line:
-    ***REMOVED***<MY BOT ACCESS TOKEN> ***REMOVED***<MY PUBLIC HTTPS URL> node bot.js
-
+Run CASEY from the command line:
+    ***REMOVED***<CASEY ACCESS TOKEN> ***REMOVED***<MY PUBLIC HTTPS URL> node bot.js
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -52,6 +47,9 @@ require(__dirname + '/components/subscribe_events.js')(controller);
 
 // Enable Dashbot.io plugin
 require(__dirname + '/components/plugin_dashbot.js')(controller);
+
+// Enable Dashbot.io plugin
+// require(__dirname + '/components/email_api.js')(controller);
 
 var normalizedPath = require("path").join(__dirname, "skills");
 require("fs").readdirSync(normalizedPath).forEach(function(file) {
@@ -96,10 +94,8 @@ if (process.env.studio_token) {
 
 function usage_tip() {
     console.log('~~~~~~~~~~');
-    console.log('Botkit Studio Starter Kit');
-    console.log('Execute your bot application like this:');
+    console.log('Bring Casey to life by executing the command below:');
     console.log('***REMOVED***MDhkYWIzYWMtMDYwOC00MWU0LTg0MjAtODljYTYwMTgzNGViM2M5NTA0YTUtMDVl ***REMOVED***https://3aa74f84.ngrok.io node bot.js');
     console.log('Get Cisco Spark token here: https://developer.ciscospark.com/apps.html')
-    console.log('Get a Botkit Studio token here: https://studio.botkit.ai/')
     console.log('~~~~~~~~~~');
 }
