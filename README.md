@@ -1,6 +1,6 @@
-# GVE Casey - A virtual assistant that helps you create and manage GVE cases using Spark.
+# GVE Casey
 
-CASEY helps you create and manage GVE cases, anywhere and on the go using Spark.<br/>
+CASEY is a virtual assistant helps you create and manage GVE cases, anywhere and on the go using Spark.<br/>
 Our mission is to make the process of creating a case as natural and intuitive as possible.<br/>
 
 Using Casey to open and manage GVE cases gives the case creator the capability to do it through an application 
@@ -34,7 +34,7 @@ npm install --save botkit
 npm install nodemailer@0.7.1
 ```
 
-* To connect your bot to Cisco Spark, [get an access token here](https://developer.ciscospark.com/add-bot.html).
+* To connect Casey to Cisco Spark, [get an access token here](https://developer.ciscospark.com/add-bot.html).
 
 * Cisco Spark requires your application be available at an SSL-enabled endpoint. To expose an endpoint during development, we recommend using [localtunnel.me](http://localtunnel.me) or [ngrok](http://ngrok.io), either of which can be used to temporarily expose Casey to the internet.
 
@@ -52,6 +52,7 @@ git clone https://github.com/JPedro2/SparkBotsANDTings.git
 Run Casey from the command line with the new tokens:
 
 ```bash
-access_token=<SPARK_BOT_ACCESS_TOKEN> public_address=<HTTPS_ADDRESS_FROM_NGROK_OR_OTHER> node bot.js'```
+access_token=<SPARK_BOT_ACCESS_TOKEN> public_address=<HTTPS_ADDRESS_FROM_NGROK_OR_OTHER> node bot.js
+```
 
 
