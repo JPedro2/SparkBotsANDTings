@@ -1,10 +1,10 @@
 {
-  "name": "botkit-starter-ciscospark",
+  "name": "Casey, Your personal GVE case handler",
   "version": "0.0.1",
-  "description": "A starter kit for building a custom Cisco Spark bot with Botkit Studio",
+  "description": "CASEY is a virtual assistant that helps you create and manage GVE cases using Spark.",
   "main": "bot.js",
   "scripts": {
-      "start": "node bot.js"
+    "start": "node bot.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -13,22 +13,17 @@
     "debug": "^2.6.0",
     "express": "^4.14.0",
     "request": "^2.79.0",
-    "wordfilter": "^0.2.6"
+    "wordfilter": "^0.2.6",
+    "nodemailer": "^0.7.1"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/howdyai/botkit-starter-ciscospark.git"
+    "url": "https://github.com/JPedro2/SparkBotsANDTings"
   },
-  "bugs": {
-    "url": "https://github.com/howdyai/botkit-starter-ciscospark/issues"
-  },
-  "homepage": "https://github.com/howdyai/botkit-starter-ciscospark",
   "keywords": [
     "bots",
     "chatbots",
     "Cisco Spark"
   ],
-  "author": "ben@howdy.ai",
-  "license": "ISC"
+  "author": "Pedro Oliveira , Idunn Knain , Patricia Florido"
 }
