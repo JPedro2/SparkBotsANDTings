@@ -16,14 +16,29 @@ There are 2 mains parts:
 var Subject;
 var CustomerName;
 var DueDate;
+var hasDealID;
 var DealID;
 var TechInvolved;
 var Description;
+var UserRequester;
+var RequestedDate;
+var today;
+var DueDatePretty;
 
 module.exports = function(controller) {
 
+    controller.hears(['^hi (.*)','^hello (.*)', '^hi','^hello'], 'direct_message,direct_mention', function(bot, message) {
+      //var UserName = message.original_message.data.personDisplayName
+      //bot.reply(message, 'Hi '+UserName+ ', How may I help you?');
+      bot.reply(message, 'Hi 😊       \n How may I help you?');
+    });
+
     controller.hears(['case'] , 'direct_message,direct_mention', function(bot, message) {
+      UserRequester = message.user;
+      bot.reply(message, 'Sure thing! I will happily help you with that.'
+                         +' I just need to ask a few questions');
       bot.startConversation(message, askSubject);
+
     });
 
     askSubject = function(response, convo, message, bot) {
@@ -48,22 +63,65 @@ module.exports = function(controller) {
         }
 
     askDueDate = function(response, convo) {
-      convo.ask("Please provide us the requested due date", function(response, convo) {
-        convo.say("Great!")
+      convo.ask("Please provide us the requested due date as [mm/dd/yyyy]", function(response, convo) {
         DueDate = response.text;
-        askDealID(response, convo);
-        convo.next();
+        if(isValidDate(DueDate)){
+            if(isPresentOrFuture(DueDate)){
+                DueDatePretty = (RequestedDate).toString().split(' ').splice(1,3).join(' '); // Convert date to more readable form, to send over email
+                convo.say("Great!");
+                convo.say("I will send this date: " +DueDatePretty);
+                queryDealID(response, convo);
+                convo.next();
+            } else {
+                convo.say("The date you requested is in the past. The date needs to be today or in the future.");
+                convo.say("I'm seeing the date as past.       \n"
+                         + "This is the date that you requested: "+ RequestedDate +"       \n"
+                         + "This is today's date: " +today);
+                askDueDate(response, convo);
+                convo.next();
+            }
+
+        } else {
+            convo.say("The date you provided is invalid.")
+            askDueDate(response, convo);
+            convo.next();
+        }
       });
     }
 
-    askDealID = function(bot, response, convo, message) {
-     convo.ask("Please provide us the deal ID, if you have one", function(response, convo) {
-       convo.say("Thank you!")
-       DealID = response.text;
-       askTechInvolved(response, convo);
-       convo.next();
+    //check if the requester has a dealID
+    queryDealID = function(response, convo) {
+     convo.ask("Do you have a deal ID?", function(response, convo) {
+       hasDealID = response.text;
+       if (hasDealID.toLowerCase().indexOf("yes") >= 0) {   //if it has then ask what it is
+         convo.say("Great!");
+         askDealID(response, convo);
+         convo.next();
+       }
+
+       if (hasDealID.toLowerCase().indexOf("no") >= 0) {
+         convo.say("That is no problem. You can add a deal ID later on.");
+         DealID = "The requester did not provide a deal ID";
+         askTechInvolved(response, convo);
+         convo.next();
+       }
+
+       if (hasDealID.toLowerCase().indexOf("yes") == -1 && hasDealID.toLowerCase().indexOf("no") == -1) {
+         convo.say("The answer you provided is invalid. Please clearly specify with a yes or a no.")
+         queryDealID(response, convo);
+         convo.next();
+       }
      });
     }
+
+    askDealID = function(response, convo) {
+         convo.ask("Please provide us the deal ID", function(response, convo) {
+           convo.say("Noted. Thank you!")
+           DealID = response.text;
+           askTechInvolved(response, convo);
+           convo.next();
+         });
+        }
 
     askTechInvolved = function(response, convo) {
      convo.ask("What are the technologies involved?", function(response, convo) {
@@ -74,13 +132,13 @@ module.exports = function(controller) {
      });
     }
 
-    askDescription = function(response, convo) {
+    askDescription = function(response, convo, message) {
       convo.ask("Can you please provide us a description?      \n"
                 + "Please give us as much information as possible about your customer and what help you need.",
-                     function(response, convo) {
-        convo.say("Thank you. That's it, all done for you.
+                     function(response, convo, message) {
+        convo.say("Thank you. That's it, all done for you. "
                 + "Your case will now be raised with SalesForce and you will receive an email with your case ID.     \n"
-                + "If you would like a demo or a call with your customer,"
+                + "If you would like a demo or a call with your customer, "
                 + "please wait to schedule it until a VSE is assigned to your case.");
         Description = response.text;
         //DisplaySummary(response, convo);
@@ -108,32 +166,33 @@ module.exports = function(controller) {
       });
     }*/
 
-    controller.hears(['email'], 'direct_message,direct_mention', function(bot, message) {
-        var UserRequester = message.user;
 
+
+    //Casey only sends an email out when it hears the word email
+    controller.hears(['email'], 'direct_message,direct_mention', function(bot, message) {
         var mail = require("nodemailer").mail;
 
         mail({
             from: "iknain@cisco.com", // sender address
             //to: "peolivei@cisco.com", // list of receivers
             //to: "peolivei@cisco.com", // list of receivers
-            cc: "UserRequester",        // always CC the requester so that he can keep a copy of the initial request
+            cc: UserRequester,          // always CC the requester so that he can keep a copy of the initial request
             to: "peolivei@cisco.com , iknain@cisco.com , pflorido@cisco.com", // list of receivers
             subject: "Raise a case with GVE", // Subject line
             //text: "", // plaintext body
             html: 'Dear Sir/Madam,<br>'
-                  +'The user ' +UserRequester+ ' would like to raise a case with GVE.
+                  +'The user ' +UserRequester+ ' would like to raise a case with GVE.'
                   +'Please find all the details below:<br><br>'
                   +'<b>Brief Subject:</b> ' +Subject+ '<br>'
                   +'<b>Customer Name:</b> ' +CustomerName+ '<br>'
-                  +'<b>Requested Due Date:</b> ' +DueDate+ '<br>'
+                  +'<b>Requested Due Date:</b> ' +DueDatePretty+ '<br>'
                   +'<b>Deal ID:</b> ' +DealID+ '<br>'
                   +'<b>Technologies Involved:</b> ' +TechInvolved+ '<br>'
                   +'<b>Description:</b> ' +Description+ '<br><br>'
                   +'Please send a confirmation email to ' +UserRequester+ ' with the case ID.<br>'
                   +'If you have any questions please contact the requester directly using the email above.<br><br>'
                   +'Best Regards,<br>'
-                  +'Casey'
+                  +'Casey, Your personal GVE case handler'
                    //'Tips:%0D%0A
                    //•Example subjects: Contact Center BoM, Prime Infrastructure Info, Customer WebEx Meeting Requested.%0D%0A
                    //•Please give us as much information as possible about your customer and what help you need.%0D%0A
@@ -142,4 +201,61 @@ module.exports = function(controller) {
                    //"<b>Hello world ✔</b>" // html body
         });
     });
+};
+
+//Date Validation Function
+function isValidDate(dateString)
+{
+/*  // Get Today's Date
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;     //January is 0
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+        dd='0'+dd
+    }
+    if(mm<10) {
+        mm='0'+mm
+    }
+    today = mm+'/'+dd+'/'+yyyy;
+*/
+
+
+    // First check for the pattern
+    if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
+        return false;
+
+    // Parse the date parts to integers
+    var parts = dateString.split("/");
+    var day = parseInt(parts[1], 10);
+    var month = parseInt(parts[0], 10);
+    var year = parseInt(parts[2], 10);
+
+    // Check the ranges of month and year
+    if(year < 1000 || year > 3000 || month == 0 || month > 12)
+        return false;
+
+    var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+    // Adjust for leap years
+    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+        monthLength[1] = 29;
+
+    // Check the range of the day
+    return day > 0 && day <= monthLength[month - 1];
+};
+
+ //Check if the requested date is today or in the future
+function isPresentOrFuture(dateString)
+{
+    today = new Date();
+    today = today.setHours(0,0,0,0);  //ignore hours, minutes, seconds and mseconds
+    RequestedDate = new Date(dateString);
+
+    if (RequestedDate >= today) {
+        return true;
+    } else {
+        return false
+    }
 };
