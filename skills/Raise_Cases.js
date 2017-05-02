@@ -24,6 +24,7 @@ var UserRequester;
 var RequestedDate;
 var today;
 var DueDatePretty;
+var sendEmailRequest;
 
 module.exports = function(controller) {
 
@@ -33,10 +34,10 @@ module.exports = function(controller) {
       bot.reply(message, 'Hi 😊       \n How may I help you?');
     });
 
-    controller.hears(['case'] , 'direct_message,direct_mention', function(bot, message) {
+    controller.hears(['^case (.*)','^case', 'case'], 'direct_message,direct_mention', function(bot, message) {
       UserRequester = message.user;
       bot.reply(message, 'Sure thing! I will happily help you with that.'
-                         +' I just need to ask a few questions');
+                         +' I just need to ask a few questions 🤓');
       bot.startConversation(message, askSubject);
 
     });
@@ -83,7 +84,7 @@ module.exports = function(controller) {
             }
 
         } else {
-            convo.say("The date you provided is invalid.")
+            convo.say("❌ The date you provided is invalid. ❌")
             askDueDate(response, convo);
             convo.next();
         }
@@ -108,7 +109,7 @@ module.exports = function(controller) {
        }
 
        if (hasDealID.toLowerCase().indexOf("yes") == -1 && hasDealID.toLowerCase().indexOf("no") == -1) {
-         convo.say("The answer you provided is invalid. Please clearly specify with a yes or a no.")
+         convo.say("❌ The answer you provided is invalid ❌. Please clearly specify with a ***yes*** or a ***no***.")
          queryDealID(response, convo);
          convo.next();
        }
@@ -137,68 +138,62 @@ module.exports = function(controller) {
       convo.ask("Can you please provide us a description?      \n"
                 + "Please give us as much information as possible about your customer and what help you need.",
                      function(response, convo, message) {
-        convo.say("Thank you. That's it, all done for you. "
-                + "Your case will now be raised with SalesForce and you will receive an email with your case ID.     \n"
-                + "If you would like a demo or a call with your customer, "
-                + "please wait to schedule it until a VSE is assigned to your case.");
+        convo.say("Brilliant! That is it, I have all the information I needed. Thank you for your cooperation. 🙌🏽");
         Description = response.text;
-        //DisplaySummary(response, convo);
+        DisplaySummary(response, convo);
         convo.next();
       });
     }
 
-    /*
+
     DisplaySummary = function(response, convo){
         convo.say("Below is the email that will be sent out to the GVE team that will raise the case for you.    \n\n");
-        convo.say("Dear Sir/Madam,      \n"
-                  +'The user ' +UserRequester+ ' would like to raise a case with GVE.'
-                  +'Please find all the details below:      \n\n'
-                  +'Brief Subject:' +Subject+ '      \n'
-                  +'Customer Name: ' +CustomerName+ '      \n'
-                  +'Requested Due Date: ' +DueDate+ '      \n'
-                  +'Deal ID: ' +DealID+ '      \n>'
-                  +'Technologies Involved: ' +TechInvolved+ '      \n'
-                  +'Description: ' +Description+ '      \n\n>'
-                  +'Please send a confirmation email to ' +UserRequester+ ' with the case ID.      \n'
-                  +'If you have any questions please contact the requester directly using the email above.      \n\n'
-                  +'Best Regards,      \n'
-                  +'Casey, Your personal GVE case handler'
+        convo.say("> Dear Sir/Madam,      \n"
+                  +'> The user *' +UserRequester+ '* would like to raise a case with GVE.'
+                  +' Please find all the details below:      \n\n'
+                  +'> - **Brief Subject: **' +Subject+ '      \n'
+                  +'> - **Customer Name:  **' +CustomerName+ '      \n'
+                  +'> - **Requested Due Date:  **' +DueDatePretty+ '      \n'
+                  +'> - **Deal ID:  **' +DealID+ '      \n'
+                  +'> - **Technologies Involved:  **' +TechInvolved+ '      \n'
+                  +'> - **Description:  **' +Description+ '      \n\n'
+                  +'> Please send a confirmation email to *' +UserRequester+ '* with the case ID.      \n'
+                  +'> If you have any questions please contact the requester directly using the email above.      \n\n'
+                  +'> Best Regards,      \n'
+                  +'> *Casey, Your personal GVE case handler*');
         convo.next();
+        sendEmailout(response, convo);
+    }
+
+    sendEmailout = function(response, convo, message) {
+      convo.ask("      \n Is the above summary to your satisfaction?      \n"
+              + "Would you like the case to be raised?", function(response, convo, message) {
+           sendEmailRequest = response.text;
+           if (sendEmailRequest.toLowerCase().indexOf("yes") >= 0) {   //Send Email out
+                sendEmail();
+                convo.say("Thank you. That's it, all done for you 🎉🤗.     \n"
+                + "Your case will now be raised with SalesForce and you will receive an email with your case ID.     \n"
+                + "If you would like a demo or a call with your customer, "
+                + "please wait to schedule it until a VSE is assigned to your case.");
+                convo.next();
+           }
+
+           if (sendEmailRequest.toLowerCase().indexOf("no") >= 0) {    //Ask the requester to restart the process
+             convo.say("Sorry to hear that! 🙁 Please start the process again.");
+             convo.next();
+           }
+
+           if (sendEmailRequest.toLowerCase().indexOf("yes") == -1 && hasDealID.toLowerCase().indexOf("no") == -1) {
+             convo.say("❌ The answer you provided is invalid ❌. Please clearly specify with a ***yes*** or a ***no***.")
+             sendEmailout(response, convo);
+             convo.next();
+           }
       });
-    }*/
-
-
+    }
 
     //Casey only sends an email out when it hears the word email
     controller.hears(['email'], 'direct_message,direct_mention', function(bot, message) {
-        var mail = require("nodemailer").mail;
-
-        mail({
-            from: "iknain@cisco.com",   // sender address
-            cc: UserRequester,          // always CC the requester so that he can keep a copy of the request
-            to: "tsn_request_caseytest@cisco.com", // list of receivers
-            subject: "Raising a case with GVE", // Subject line
-            //text: "", // plaintext body
-            html: 'Dear Sir/Madam,<br>'
-                  +'The user ' +UserRequester+ ' would like to raise a case with GVE.'
-                  +'Please find all the details below:<br><br>'
-                  +'<b>Brief Subject:</b> ' +Subject+ '<br>'
-                  +'<b>Customer Name:</b> ' +CustomerName+ '<br>'
-                  +'<b>Requested Due Date:</b> ' +DueDatePretty+ '<br>'
-                  +'<b>Deal ID:</b> ' +DealID+ '<br>'
-                  +'<b>Technologies Involved:</b> ' +TechInvolved+ '<br>'
-                  +'<b>Description:</b> ' +Description+ '<br><br>'
-                  +'Please send a confirmation email to ' +UserRequester+ ' with the case ID.<br>'
-                  +'If you have any questions please contact the requester directly using the email above.<br><br>'
-                  +'Best Regards,<br>'
-                  +'Casey, Your personal GVE case handler'
-                   //'Tips:%0D%0A
-                   //•Example subjects: Contact Center BoM, Prime Infrastructure Info, Customer WebEx Meeting Requested.%0D%0A
-                   //•Please give us as much information as possible about your customer and what help you need.%0D%0A
-                   //•Don’t forget to attach documents if needed.%0D%0A
-                   //•If you would like a demo or call with your customer, please wait to schedule until a VSE is assigned." "
-                   //"<b>Hello world ✔</b>" // html body
-        });
+        sendEmail();
     });
 };
 
@@ -229,7 +224,7 @@ function isValidDate(dateString)
     return day > 0 && day <= monthLength[month - 1];
 };
 
- //Check if the requested date is today or in the future
+//Check if the requested date is today or in the future
 function isPresentOrFuture(dateString)
 {
     today = new Date();
@@ -249,3 +244,37 @@ function isPresentOrFuture(dateString)
         return false
     }
 };
+
+//send email out
+function sendEmail()
+{
+    var mail = require("nodemailer").mail;
+
+    mail({
+        from: "iknain@cisco.com",   // sender address
+        cc: UserRequester,          // always CC the requester so that he can keep a copy of the request
+        to: "pflorido@cisco.com",
+        //to: "tsn_request_caseytest@cisco.com", // list of receivers
+        subject: "Raising a case with GVE", // Subject line
+        //text: "", // plaintext body
+        html: 'Dear Sir/Madam,<br>'
+              +'The user ' +UserRequester+ ' would like to raise a case with GVE.'
+              +' Please find all the details below:<br><br>'
+              +'<li><b>Brief Subject:</b> ' +Subject+ '</li><br>'
+              +'<li><b>Customer Name:</b> ' +CustomerName+ '</li><br>'
+              +'<li><b>Requested Due Date:</b> ' +DueDatePretty+ '</li><br>'
+              +'<li><b>Deal ID:</b> ' +DealID+ '</li><br>'
+              +'<li><b>Technologies Involved:</b> ' +TechInvolved+ '</li><br>'
+              +'<li><b>Description:</b> ' +Description+ '</li><br><br>'
+              +'Please send a confirmation email to ' +UserRequester+ ' with the case ID.<br>'
+              +'If you have any questions please contact the requester directly using the email above.<br><br>'
+              +'Best Regards,<br>'
+              +'<i>Casey, Your personal GVE case handler</i>'
+               //'Tips:%0D%0A
+               //•Example subjects: Contact Center BoM, Prime Infrastructure Info, Customer WebEx Meeting Requested.%0D%0A
+               //•Please give us as much information as possible about your customer and what help you need.%0D%0A
+               //•Don’t forget to attach documents if needed.%0D%0A
+               //•If you would like a demo or call with your customer, please wait to schedule until a VSE is assigned." "
+               //"<b>Hello world ✔</b>" // html body
+    });
+}
