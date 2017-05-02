@@ -1,19 +1,18 @@
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                     ____
-                    /\  _`\
-                    \ \ \/\_\     __      ____     __   __  __
-                     \ \ \/_/_  /'__`\   /',__\  /'__`\/\ \/\ \
-                      \ \ \L\ \/\ \L\.\_/\__, `\/\  __/\ \ \_\ \
-                       \ \____/\ \__/.\_\/\____/\ \____\\/`____ \
-                        \/___/  \/__/\/_/\/___/  \/____/ `/___/> \
-                                                            /\___/
-                                                            \/__/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                 ____
+                                /\  _`\
+                                \ \ \/\_\     __      ____     __   __  __
+                                 \ \ \/_/_  /'__`\   /',__\  /'__`\/\ \/\ \
+                                  \ \ \L\ \/\ \L\.\_/\__, `\/\  __/\ \ \_\ \
+                                   \ \____/\ \__/.\_\/\____/\ \____\\/`____ \
+                                    \/___/  \/__/\/_/\/___/  \/____/ `/___/> \
+                                                                        /\___/
+                                                                        \/__/
 
 Run CASEY from the command line:
     access_token=<CASEY ACCESS TOKEN> public_address=<MY PUBLIC HTTPS URL> node bot.js
 
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 if (!process.env.access_token) {
     console.log('Error: Specify a Cisco Spark access_token in environment.');
@@ -59,12 +58,10 @@ require("fs").readdirSync(normalizedPath).forEach(function(file) {
 });
 
 
-// This captures and evaluates any message sent to the bot as a DM
-// or sent to the bot in the form "@bot message" and passes it to
-// Botkit Studio to evaluate for trigger words and patterns.
+// This captures and evaluates any message sent to Casey as a DM
+// or in the form "@bot message" and passes it to Botkit Studio
+// to evaluate for trigger words and patterns.
 // If a trigger is matched, the conversation will automatically fire!
-// You can tie into the execution of the script using the functions
-// controller.studio.before, controller.studio.after and controller.studio.validate
 if (process.env.studio_token) {
     controller.on('direct_message,direct_mention', function(bot, message) {
         if (message.text) {
@@ -92,12 +89,4 @@ if (process.env.studio_token) {
     console.log('~~~~~~~~~~');
     console.log('NOTE: Botkit Studio functionality has not been enabled');
     console.log('To enable, pass in a studio_token parameter with a token from https://studio.botkit.ai/');
-}
-
-function usage_tip() {
-    console.log('~~~~~~~~~~');
-    console.log('Bring Casey to life by executing the command below:');
-    console.log('access_token=MDhkYWIzYWMtMDYwOC00MWU0LTg0MjAtODljYTYwMTgzNGViM2M5NTA0YTUtMDVl public_address=https://3aa74f84.ngrok.io node bot.js');
-    console.log('Get Cisco Spark token here: https://developer.ciscospark.com/apps.html')
-    console.log('~~~~~~~~~~');
 }
