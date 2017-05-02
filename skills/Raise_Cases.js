@@ -76,9 +76,9 @@ module.exports = function(controller) {
                 convo.next();
             } else {
                 convo.say("The date you requested is in the past. The date needs to be today or in the future.");
-                convo.say("I'm seeing the date as past.       \n"
-                         + "This is the date that you requested: "+ RequestedDate +"       \n"
-                         + "This is today's date: " +today);
+                //convo.say("I'm seeing a date that is in the past.       \n"
+                //         + "This is the date that you requested: "+ RequestedDate +"       \n"
+                //         + "This is today's date: " +today);
                 askDueDate(response, convo);
                 convo.next();
             }
@@ -118,10 +118,23 @@ module.exports = function(controller) {
 
     askDealID = function(response, convo) {
          convo.ask("Please provide us the deal ID", function(response, convo) {
-           convo.say("Noted. Thank you!")
            DealID = response.text;
-           askTechInvolved(response, convo);
-           convo.next();
+           var isnum = /^\d+$/.test(DealID);
+           if(isnum){
+               if (DealID.length != 7){
+                   convo.say("❌ The deal ID you provided is invalid ❌. Please provide a deal ID with ***7 digits only***.");
+                   askDealID(response, convo);
+                   convo.next();
+               } else {
+                  convo.say("Noted. Thank you!");
+                  askTechInvolved(response, convo);
+                  convo.next();
+               }
+           } else if (!isnum){
+              convo.say("❌ The deal ID you provided is invalid ❌. Please provide ***numbers*** only.");
+              askDealID(response, convo);
+              convo.next();
+           }
          });
         }
 
@@ -206,8 +219,8 @@ function isValidDate(dateString)
 
     // Parse the date parts to integers
     var parts = dateString.split("/");
-    var day = parseInt(parts[1], 10);
-    var month = parseInt(parts[0], 10);
+    var day = parseInt(parts[0], 10);
+    var month = parseInt(parts[1], 10);
     var year = parseInt(parts[2], 10);
 
     // Check the ranges of month and year
