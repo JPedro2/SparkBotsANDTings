@@ -162,7 +162,7 @@ module.exports = function(controller) {
                   +'Please send a confirmation email to ' +UserRequester+ ' with the case ID.      \n'
                   +'If you have any questions please contact the requester directly using the email above.      \n\n'
                   +'Best Regards,      \n'
-                  +'Casey'
+                  +'Casey, Your personal GVE case handler'
         convo.next();
       });
     }*/
@@ -176,8 +176,8 @@ module.exports = function(controller) {
         mail({
             from: "iknain@cisco.com",   // sender address
             cc: UserRequester,          // always CC the requester so that he can keep a copy of the request
-            to: "peolivei@cisco.com , iknain@cisco.com , pflorido@cisco.com", // list of receivers
-            subject: "Raise a case with GVE", // Subject line
+            to: "tsn_request_caseytest@cisco.com", // list of receivers
+            subject: "Raising a case with GVE", // Subject line
             //text: "", // plaintext body
             html: 'Dear Sir/Madam,<br>'
                   +'The user ' +UserRequester+ ' would like to raise a case with GVE.'
@@ -205,21 +205,6 @@ module.exports = function(controller) {
 //Date Validation Function
 function isValidDate(dateString)
 {
-/*  // Get Today's Date
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1;     //January is 0
-    var yyyy = today.getFullYear();
-
-    if(dd<10) {
-        dd='0'+dd
-    }
-    if(mm<10) {
-        mm='0'+mm
-    }
-    today = mm+'/'+dd+'/'+yyyy;
-*/
-
     // First check for the pattern
     if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
         return false;
@@ -248,7 +233,7 @@ function isValidDate(dateString)
 function isPresentOrFuture(dateString)
 {
     today = new Date();
-    today = today.setHours(0,0,0,0);                //Ignore hours, minutes, seconds and mseconds
+    today = today.setHours(0,0,0,0);                //Ignore hours, minutes, seconds and miliseconds
 
     //Change the format from dd/mm/yyyy to mm/dd/yyyy to be able to compare dates and use dateformat capabilities
     RequestedDate = (dateString).toString().split('/');

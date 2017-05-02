@@ -18,10 +18,9 @@ To do this all you need to do is tell Casey that you wish to open a case. For ex
 _`Hi Casey, I would like to open a case with GVE`_
 
 Casey will then ask you further clarification questions and send an email out to the GVE case handler team - the requester will be CC'ed in the email.
-
 You can find the overview video of the project below:
 
-[Casey, Your personal GVE case handler](https://www.youtube.com/watch?v=oHg5SJYRHA0&feature=youtu.be&t=43s)
+[Casey, Your personal GVE case handler](https://cisco.box.com/s/tb457pgi9zo3025r5glyq9c881mrrv8a)
 
 
 ### Dependencies
@@ -33,10 +32,16 @@ So you need to install these first before running Casey. <br/>
 ```bash
 npm install --save botkit
 ```
+
 * To send emails Casey uses NodeMailer, which can be installed via NPM. 
 
 ```bash
 npm install nodemailer@0.7.1
+```
+* To format dates and send them over email, Casey uses dateFormat, which can be installed via NPM. 
+
+```bash
+npm install dateformat
 ```
 
 * To connect Casey to Cisco Spark, [get an access token here](https://developer.ciscospark.com/add-bot.html).
