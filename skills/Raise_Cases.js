@@ -63,13 +63,14 @@ module.exports = function(controller) {
         }
 
     askDueDate = function(response, convo) {
-      convo.ask("Please provide us the requested due date as [mm/dd/yyyy]", function(response, convo) {
+      convo.ask("Please provide us the requested due date as [dd/mm/yyyy]", function(response, convo) {
         DueDate = response.text;
         if(isValidDate(DueDate)){
             if(isPresentOrFuture(DueDate)){
-                DueDatePretty = (RequestedDate).toString().split(' ').splice(1,3).join(' '); // Convert date to more readable form, to send over email
+                var dateFormat = require('dateformat'); //Make the requested date more readable to send it over email
+                DueDatePretty = dateFormat(RequestedDate, "fullDate");
                 convo.say("Great!");
-                convo.say("I will send this date: " +DueDatePretty);
+                //convo.say("I will send this date: " +DueDatePretty);
                 queryDealID(response, convo);
                 convo.next();
             } else {
@@ -173,10 +174,8 @@ module.exports = function(controller) {
         var mail = require("nodemailer").mail;
 
         mail({
-            from: "iknain@cisco.com", // sender address
-            //to: "peolivei@cisco.com", // list of receivers
-            //to: "peolivei@cisco.com", // list of receivers
-            cc: UserRequester,          // always CC the requester so that he can keep a copy of the initial request
+            from: "iknain@cisco.com",   // sender address
+            cc: UserRequester,          // always CC the requester so that he can keep a copy of the request
             to: "peolivei@cisco.com , iknain@cisco.com , pflorido@cisco.com", // list of receivers
             subject: "Raise a case with GVE", // Subject line
             //text: "", // plaintext body
@@ -221,7 +220,6 @@ function isValidDate(dateString)
     today = mm+'/'+dd+'/'+yyyy;
 */
 
-
     // First check for the pattern
     if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
         return false;
@@ -250,9 +248,16 @@ function isValidDate(dateString)
 function isPresentOrFuture(dateString)
 {
     today = new Date();
-    today = today.setHours(0,0,0,0);  //ignore hours, minutes, seconds and mseconds
-    RequestedDate = new Date(dateString);
+    today = today.setHours(0,0,0,0);                //Ignore hours, minutes, seconds and mseconds
 
+    //Change the format from dd/mm/yyyy to mm/dd/yyyy to be able to compare dates and use dateformat capabilities
+    RequestedDate = (dateString).toString().split('/');
+    var RequestedDateDay   = RequestedDate[0];
+    var RequestedDateMonth = RequestedDate[1];
+    var RequestedDateYear  = RequestedDate[2];
+    RequestedDate = RequestedDateMonth+'/'+RequestedDateDay+'/'+RequestedDateYear;
+
+    RequestedDate = new Date(RequestedDate);        //Make today and RequestedDate the same format for comparison
     if (RequestedDate >= today) {
         return true;
     } else {
