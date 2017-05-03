@@ -10,7 +10,7 @@
                                                                         \/__/
 
 Run CASEY from the command line:
-    ***REMOVED***<CASEY ACCESS TOKEN> ***REMOVED***<MY PUBLIC HTTPS URL> node bot.js
+    ***REMOVED***<CASEY ACCESS TOKEN> ***REMOVED***<MY PUBLIC HTTPS URL (From NGROK for example)> node bot.js
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
