@@ -196,7 +196,7 @@ module.exports = function(controller) {
              convo.next();
            }
 
-           if (sendEmailRequest.toLowerCase().indexOf("yes") == -1 && hasDealID.toLowerCase().indexOf("no") == -1) {
+           if (sendEmailRequest.toLowerCase().indexOf("yes") == -1 && sendEmailRequest.toLowerCase().indexOf("no") == -1) {
              convo.say("❌ The answer you provided is invalid ❌. Please clearly specify with a ***yes*** or a ***no***.")
              sendEmailout(response, convo);
              convo.next();
