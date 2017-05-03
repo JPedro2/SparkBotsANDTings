@@ -10,7 +10,7 @@
                                                                         \/__/
 
 Run CASEY from the command line:
-    access_token=<CASEY ACCESS TOKEN> public_address=<MY PUBLIC HTTPS URL> node bot.js
+    access_token=<CASEY ACCESS TOKEN> public_address=<MY PUBLIC HTTPS URL (From NGROK for example)> node bot.js
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

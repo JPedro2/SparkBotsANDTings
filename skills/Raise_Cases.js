@@ -206,6 +206,7 @@ module.exports = function(controller) {
 
     //Casey only sends an email out when it hears the word email
     controller.hears(['email'], 'direct_message,direct_mention', function(bot, message) {
+        UserRequester = message.user;
         sendEmail();
     });
 };
@@ -264,10 +265,9 @@ function sendEmail()
     var mail = require("nodemailer").mail;
 
     mail({
-        from: "iknain@cisco.com",   // sender address
+        from: "<insert_the_email_you_want_associated_with_Casey>",   // sender address
         cc: UserRequester,          // always CC the requester so that he can keep a copy of the request
-        to: "pflorido@cisco.com",
-        //to: "tsn_request_caseytest@cisco.com", // list of receivers
+        to: "<insert_the_email_where_you_want_the_case_to_be_sent>",
         subject: "Raising a case with GVE", // Subject line
         //text: "", // plaintext body
         html: 'Dear Sir/Madam,<br>'
@@ -283,11 +283,5 @@ function sendEmail()
               +'If you have any questions please contact the requester directly using the email above.<br><br>'
               +'Best Regards,<br>'
               +'<i>Casey, Your personal GVE case handler</i>'
-               //'Tips:%0D%0A
-               //•Example subjects: Contact Center BoM, Prime Infrastructure Info, Customer WebEx Meeting Requested.%0D%0A
-               //•Please give us as much information as possible about your customer and what help you need.%0D%0A
-               //•Don’t forget to attach documents if needed.%0D%0A
-               //•If you would like a demo or call with your customer, please wait to schedule until a VSE is assigned." "
-               //"<b>Hello world ✔</b>" // html body
     });
 }
