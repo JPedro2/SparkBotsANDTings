@@ -1,5 +1,7 @@
 # GVE Casey
 
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 Casey is a virtual assistant that helps you create and manage GVE cases, anywhere and on the go using Spark.<br/>
 Our mission is to make the process of raising a case with GVE as natural and intuitive as possible.<br/>
 
