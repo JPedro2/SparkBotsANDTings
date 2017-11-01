@@ -1,10 +1,10 @@
 {
-  "name": "Casey, Your personal GVE case handler",
+  "name": "Casey, GVE Bot",
   "description": "CASEY is a virtual assistant that helps you create and manage GVE cases using Spark.",
   "repository": "https://github.com/JPedro2/SparkBotsANDTings",
   "keywords": ["node", "bots", "cisco spark","botkit"],
-  "website": "",
-  "success_url":"",
+  "website": "https://studio.botkit.ai/",
+  "success_url":"/",
   "env": {
       "access_token": {
           "description": "Access Token provided by Cisco Spark"
