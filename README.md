@@ -62,7 +62,7 @@ git clone https://github.com/JPedro2/SparkBotsANDTings.git
 Run Casey from the command line with the new tokens:
 
 ```bash
-***REMOVED***<SPARK_BOT_ACCESS_TOKEN> ***REMOVED***<HTTPS_ADDRESS_FROM_NGROK_OR_OTHER> node bot.js
+access_token=<SPARK_BOT_ACCESS_TOKEN> public_address=<HTTPS_ADDRESS_FROM_NGROK_OR_OTHER> node bot.js
 ```
 
 

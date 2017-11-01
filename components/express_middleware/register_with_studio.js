@@ -17,7 +17,7 @@ module.exports = function(webserver, controller) {
 
                 request({
                     method: 'post',
-                    uri: (controller.config.studio_command_uri || 'https://studio.botkit.ai') + '/api/v1/bots/phonehome?***REMOVED***' + controller.config.studio_token,
+                    uri: (controller.config.studio_command_uri || 'https://studio.botkit.ai') + '/api/v1/bots/phonehome?access_token=' + controller.config.studio_token,
                     form: instance,
                 },function(err, res, body) {
 
