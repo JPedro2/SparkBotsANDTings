@@ -14,6 +14,10 @@ Run CASEY from the command line:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+var env = require('node-env-file');
+env(__dirname + '/.env');
+
+
 if (!process.env.access_token) {
     console.log('Error: Specify a Cisco Spark access_token in environment.');
     usage_tip();
@@ -35,7 +39,7 @@ var controller = Botkit.sparkbot({
     public_address: process.env.public_address,
     ciscospark_access_token: process.env.access_token,
     studio_token: process.env.studio_token, // get one from studio.botkit.ai to enable content management, stats, message console and more
-    secret: process.env.secret, // this is an RECOMMENDED but optional setting that enables validation of incoming webhooks
+    secret: process.env.secret, // this is a RECOMMENDED but optional setting that enables validation of incoming webhooks
     webhook_name: 'Casey Webhook',
     studio_command_uri: process.env.studio_command_uri,
 });
@@ -48,9 +52,6 @@ require(__dirname + '/components/subscribe_events.js')(controller);
 
 // Enable Dashbot.io plugin
 require(__dirname + '/components/plugin_dashbot.js')(controller);
-
-// Enable Dashbot.io plugin
-// require(__dirname + '/components/email_api.js')(controller);
 
 var normalizedPath = require("path").join(__dirname, "skills");
 require("fs").readdirSync(normalizedPath).forEach(function(file) {
@@ -65,7 +66,7 @@ require("fs").readdirSync(normalizedPath).forEach(function(file) {
 if (process.env.studio_token) {
     controller.on('direct_message,direct_mention', function(bot, message) {
         if (message.text) {
-            controller.studio.runTrigger(bot, message.text, message.user, message.channel).then(function(convo) {
+            controller.studio.runTrigger(bot, message.text, message.user, message.channel, message).then(function(convo) {
                 if (!convo) {
                     // no trigger was matched
                     // If you want your bot to respond to every message,
@@ -89,4 +90,14 @@ if (process.env.studio_token) {
     console.log('~~~~~~~~~~');
     console.log('NOTE: Botkit Studio functionality has not been enabled');
     console.log('To enable, pass in a studio_token parameter with a token from https://studio.botkit.ai/');
+}
+
+function usage_tip() {
+    console.log('~~~~~~~~~~');
+    console.log('Casey');
+    console.log('Execute your Casey like this:');
+    console.log('***REMOVED***<MY ACCESS TOKEN> ***REMOVED***<https://mybotapp/> node bot.js');
+    console.log('Get Cisco Spark token here: https://developer.ciscospark.com/apps.html')
+    console.log('Get a Botkit Studio token here: https://studio.botkit.ai/')
+    console.log('~~~~~~~~~~');
 }
