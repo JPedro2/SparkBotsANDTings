@@ -1,5 +1,5 @@
 {
-  "name": "Casey, Your personal GVE case handler",
+  "name": "Casey-GVE-case-handler",
   "version": "0.0.1",
   "description": "CASEY is a virtual assistant that helps you create and manage GVE cases using Spark.",
   "main": "bot.js",
@@ -8,14 +8,19 @@
   },
   "dependencies": {
     "body-parser": "^1.15.2",
-    "botkit": "^0.5",
-    "dashbot": "0.7.4",
+    "botkit": "^0.6",
+    "botkit-studio-metrics": "^0.0.1",
     "debug": "^2.6.0",
     "express": "^4.14.0",
+    "node-env-file": "^0.1.8",
     "request": "^2.79.0",
     "wordfilter": "^0.2.6",
-    "nodemailer": "^0.7.1"
+    "dashbot": "0.7.4",
+    "node-env-file": "^0.1.8",
+    "nodemailer": "^0.7.1",
+    "dateformat": "^3.0.1"
   },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/JPedro2/SparkBotsANDTings"
@@ -25,5 +30,6 @@
     "chatbots",
     "Cisco Spark"
   ],
-  "author": "Pedro Oliveira"
+  "author": "Pedro Oliveira",
+  "license": "ISC"
 }
