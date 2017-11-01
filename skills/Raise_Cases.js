@@ -121,7 +121,7 @@ module.exports = function(controller) {
            DealID = response.text;
            var isnum = /^\d+$/.test(DealID);
            if(isnum){
-               if (DealID.length != 7){
+               if (DealID.length < 7){
                    convo.say("❌ The deal ID you provided is invalid ❌. Please provide a deal ID with ***7 digits only***.");
                    askDealID(response, convo);
                    convo.next();
@@ -265,9 +265,9 @@ function sendEmail()
     var mail = require("nodemailer").mail;
 
     mail({
-        from: "<insert_the_email_you_want_associated_with_Casey>",   // sender address
+        from: "peolivei@cisco.com",   // sender address
         cc: UserRequester,          // always CC the requester so that he can keep a copy of the request
-        to: "<insert_the_email_where_you_want_the_case_to_be_sent>",
+        to: "clgeyer@cisco.com ; omadrile@cisco.com ; iknain@cisco.com",
         subject: "Raising a case with GVE", // Subject line
         //text: "", // plaintext body
         html: 'Dear Sir/Madam,<br>'
