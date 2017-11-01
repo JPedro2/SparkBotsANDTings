@@ -1,11 +1,7 @@
-/*
-
-This module collects some very simple runtime stats for use in the uptime/debug webhooks
-
-*/
+//This module collects some very simple runtime stats for use in the uptime/debug webhooks
 
 module.exports = function(controller) {
-    /* Collect some very simple runtime stats for use in the uptime/debug command */
+    // Collect some very simple runtime stats for use in the uptime/debug command
     var stats = {
         triggers: 0,
         convos: 0,
