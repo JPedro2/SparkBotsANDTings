@@ -10,7 +10,7 @@
                                                                         \/__/
 
 Run CASEY from the command line:
-    ***REMOVED***<CASEY ACCESS TOKEN> ***REMOVED***<MY PUBLIC HTTPS URL (From NGROK for example)> node bot.js
+    access_token=<CASEY ACCESS TOKEN> public_address=<MY PUBLIC HTTPS URL (From NGROK for example)> node bot.js
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -96,7 +96,7 @@ function usage_tip() {
     console.log('~~~~~~~~~~');
     console.log('Casey');
     console.log('Execute your Casey like this:');
-    console.log('***REMOVED***<MY ACCESS TOKEN> ***REMOVED***<https://mybotapp/> node bot.js');
+    console.log('access_token=<MY ACCESS TOKEN> public_address=<https://mybotapp/> node bot.js');
     console.log('Get Cisco Spark token here: https://developer.ciscospark.com/apps.html')
     console.log('Get a Botkit Studio token here: https://studio.botkit.ai/')
     console.log('~~~~~~~~~~');
